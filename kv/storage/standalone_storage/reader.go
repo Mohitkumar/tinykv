@@ -21,7 +21,11 @@ func NewBadgerReader(db *badger.DB) *badgerReader {
 }
 
 func (r *badgerReader) GetCF(cf string, key []byte) ([]byte, error) {
-	return engine_util.GetCF(r.db, cf, key)
+	val, err := engine_util.GetCF(r.db, cf, key)
+	if err != nil {
+		return nil, nil
+	}
+	return val, nil
 }
 
 func (r *badgerReader) IterCF(cf string) engine_util.DBIterator {
